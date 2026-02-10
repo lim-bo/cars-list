@@ -3,6 +3,7 @@ import './App.css'
 import CarsList from './components/CarsList/CarsList'
 import { loadCars } from './storage/cars';
 import { fetchCars } from './services/cars';
+import Sort from './components/Sort/Sort';
 
 function App() {
   const [cars, setCars] = useState([]);
@@ -33,15 +34,18 @@ function App() {
 
   return (
     <>
-      <header>
-        <h1>Beautiful cars</h1>
+      <header className="section header">
+        <h1 className="header__title">Beautiful cars</h1>
       </header>
-      <main>
+      <main className="section main">
         {
           isLoading ? 
           <p>Загрузка</p>
           :
-          <CarsList cars={cars}></CarsList>
+          <>
+            <Sort></Sort>
+            <CarsList cars={cars}></CarsList>
+          </>
         }
       </main>
     </>

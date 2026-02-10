@@ -1,0 +1,20 @@
+.car {
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: border-color 0.2s ease, transform 0.3s ease;
+}
+
+.car:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.car__name {
+    font-size: clamp(16px, 13.18px + 0.75vw, 24px);
+    margin-block-end: 5px;
+}
+
+.car__info {
+    font-size: clamp(12px, 10.59px + 0.38vw, 16px);
+}

@@ -3,7 +3,7 @@ import "./CarsList.css";
 
 function CarsList({ cars }) {
     return (
-        <ul>
+        <ul className="cars-list">
         {
             cars.map(car => <CarItem key={car.id} data={car}></CarItem>)
         }

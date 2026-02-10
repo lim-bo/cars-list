@@ -1,0 +1,11 @@
+@font-face {
+    font-family: Sansation;
+    font-weight: 400;
+    src: url(./Sansation-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Sansation;
+    font-weight: 700;
+    src: url(./Sansation-Bold.ttf) format("truetype");
+}

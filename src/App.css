@@ -1,0 +1,39 @@
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    block-size: 100dvh;
+    padding-block: 5px;
+    background-color: var(--body-bg-color);
+    color: var(--main-font-color);
+    font-family: Sansation, sans-serif;
+}
+
+.section {
+    inline-size: clamp(350px, 50.70px + 79.81vw, 1200px);
+    background-color: var(--bg-color);
+    border: 2px dashed var(--accent-color);
+    border-radius: 5px;
+}
+
+.header {
+    padding: 10px 5px;
+    font-weight: 700;
+    font-size: clamp(20px, 15.77px + 1.13vw, 32px);
+}
+
+.header__title {
+    transition: text-shadow 0.3s;
+}
+
+.header__title:hover {
+    text-shadow: 3px 3px var(--accent-color);
+}
+
+.main {
+    max-block-size: 80dvh;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    overflow-x: hidden;
+}

@@ -1,0 +1,9 @@
+.cars-list {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 15px;
+    block-size: 100%;
+    overflow-y: auto;
+}
