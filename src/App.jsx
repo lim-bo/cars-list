@@ -1,13 +1,43 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 import CarsList from './components/CarsList/CarsList'
-import { loadCars } from './storage/cars';
+import { loadCars, saveCars } from './storage/cars';
 import { fetchCars } from './services/cars';
 import Sort from './components/Sort/Sort';
 
 function App() {
   const [cars, setCars] = useState([]);
   const [isLoading, setLoading] = useState(true);
+
+  const sortCars = useCallback((option) => {
+    switch (option) {
+      case "year-sort":
+        setCars([...cars].sort((a, b) => {
+          if (a.year < b.year) {
+            return -1;
+          } else if (a.year > b.year) {
+            return 1;
+          }
+          return 0;
+        }));
+        break;
+      case "price-sort":
+        setCars([...cars].sort((a, b) => {
+          if (a.price < b.price) {
+            return -1;
+          } else if (a.price > b.price) {
+            return 1;
+          }
+          return 0;
+        }));
+        break;
+      default:
+        setCars([...cars].sort((a, b) => {
+          return a.id - b.id;
+        }))
+        return;
+    }
+  }, [cars]);
 
   useEffect(() => {
     const initialLoading = async () => {
@@ -43,7 +73,7 @@ function App() {
           <p>Загрузка</p>
           :
           <>
-            <Sort></Sort>
+            <Sort onSort={sortCars}></Sort>
             <CarsList cars={cars}></CarsList>
           </>
         }

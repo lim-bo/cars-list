@@ -32,8 +32,7 @@
 }
 
 .main {
+    position: relative;
     max-block-size: 80dvh;
-    display: grid;
-    grid-template-columns: max-content 1fr;
     overflow-x: hidden;
 }

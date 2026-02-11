@@ -29,3 +29,8 @@ ol,
 ul {
   list-style: none;
 }
+
+button,
+input {
+  font-family: inherit;
+}
