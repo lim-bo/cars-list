@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 import CarsList from './components/CarsList/CarsList'
-import { loadCars, saveCars } from './storage/cars';
+import { loadCars, saveCars, getMinID } from './storage/cars';
 import { fetchCars } from './services/cars';
 import Sort from './components/Sort/Sort';
+import AddCarForm from './components/AddCarForm/AddCarForm';
 
 function App() {
   const [cars, setCars] = useState([]);
@@ -39,6 +40,12 @@ function App() {
     }
   }, [cars]);
 
+  const addCar = useCallback((newCar) => {
+    const newItems = [...cars, { id: getMinID(cars), ...newCar }];
+    setCars(newItems);
+    saveCars(newItems);
+  }, [cars]);
+
   useEffect(() => {
     const initialLoading = async () => {
       const localCars = loadCars();
@@ -52,6 +59,7 @@ function App() {
             throw fetchedCars.error;
           }
           setCars(fetchedCars.data);
+          saveCars(fetchedCars.data);
         } catch (error) {
           console.error(`Fetching cars error: ${error}`);
         } finally {
@@ -73,7 +81,10 @@ function App() {
           <p>Загрузка</p>
           :
           <>
-            <Sort onSort={sortCars}></Sort>
+            <div>
+              <Sort onSort={sortCars}></Sort>
+              <AddCarForm onAddCar={addCar}></AddCarForm>
+            </div>
             <CarsList cars={cars}></CarsList>
           </>
         }

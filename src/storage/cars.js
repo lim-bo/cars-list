@@ -11,3 +11,13 @@ export function loadCars() {
     }
     return items;
 }
+
+export function getMinID(items) {
+    const existingIDs = new Set(items.map(car => car.id));
+    if (!existingIDs.size) return 1;
+    let id = 1;
+    while (existingIDs.has(id)) {
+        id++;
+    }
+    return id;
+}

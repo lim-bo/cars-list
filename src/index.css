@@ -20,7 +20,9 @@ ul,
 li,
 header,
 main,
-footer {
+footer,
+input,
+button {
   padding: 0;
   margin: 0;
 }

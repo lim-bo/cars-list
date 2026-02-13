@@ -13,7 +13,7 @@
 .section {
     inline-size: clamp(350px, 50.70px + 79.81vw, 1200px);
     background-color: var(--bg-color);
-    border: 2px dashed var(--accent-color);
+    border: 2px solid var(--accent-color);
     border-radius: 5px;
 }
 
@@ -33,6 +33,43 @@
 
 .main {
     position: relative;
-    max-block-size: 80dvh;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    max-block-size: 85dvh;
     overflow-x: hidden;
+}
+
+.button {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--main-font-color);
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:focus-visible, .button:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.side-open {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    block-size: 40px;
+    inline-size: 20px;
+    inset-block-start: 50%;
+    inset-inline-end: 0;
+    transform: translateY(-50%) translateX(100%);
+    padding: 2px;
+    background-color: var(--accent-color);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #000;
+    cursor: pointer;
 }

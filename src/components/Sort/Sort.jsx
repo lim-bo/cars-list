@@ -23,7 +23,7 @@ function Sort({ onSort }) {
 
     return (
         <article className={`sort-window${isOpen ? " opened" : ""}`}>
-            <span className="sort-window__open" onClick={() => {
+            <span className="sort-window__open side-open" onClick={() => {
                 setOpen(!isOpen);
             }}>
                 {

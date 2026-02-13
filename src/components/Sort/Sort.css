@@ -1,5 +1,6 @@
 .sort-window {
     position: absolute;
+    z-index: 1;
     display: flex;
     align-items: center;
     block-size: 100%;
@@ -9,32 +10,12 @@
 }
 
 .sort-window.opened {
+    z-index: 2;
     transform: translateX(0);
 }
 
-.sort-window.opened + .cars-list {
+.main:has(.opened) .cars-list{
     pointer-events: none;
-}
-
-.sort-window__open {
-    position: absolute;
-    z-index: 1;
-    block-size: 40px;
-    inline-size: 20px;
-    inset-block-start: 50%;
-    inset-inline-end: 0;
-    transform: translateY(-50%) translateX(100%);
-    background-color: var(--accent-color);
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    color: #000;
-    cursor: pointer;
-}
-
-.sort-window__open svg {
-    position: absolute;
-    inset-block-start: 50%;
-    transform: translateY(-50%);
 }
 
 .sort-form__options {
@@ -53,6 +34,7 @@
     background-color: var(--button-bg-color);
     color: var(--main-font-color);
     transition: all 0.2s;
+    font-size: clamp(12px, 10.59px + 0.38vw, 16px);
 }
 
 .sort-option:hover {
