@@ -5,46 +5,19 @@ import { loadCars, saveCars, getMinID } from './storage/cars';
 import { fetchCars } from './services/cars';
 import Sort from './components/Sort/Sort';
 import AddCarForm from './components/AddCarForm/AddCarForm';
+import { SortProvider, useSort } from './context/SortContext';
 
 function App() {
   const [cars, setCars] = useState([]);
   const [isLoading, setLoading] = useState(true);
-
-  const sortCars = useCallback((option) => {
-    switch (option) {
-      case "year-sort":
-        setCars([...cars].sort((a, b) => {
-          if (a.year < b.year) {
-            return -1;
-          } else if (a.year > b.year) {
-            return 1;
-          }
-          return 0;
-        }));
-        break;
-      case "price-sort":
-        setCars([...cars].sort((a, b) => {
-          if (a.price < b.price) {
-            return -1;
-          } else if (a.price > b.price) {
-            return 1;
-          }
-          return 0;
-        }));
-        break;
-      default:
-        setCars([...cars].sort((a, b) => {
-          return a.id - b.id;
-        }))
-        return;
-    }
-  }, [cars]);
+  const { sortOption } = useSort();
 
   const addCar = useCallback((newCar) => {
     const newItems = [...cars, { id: getMinID(cars), ...newCar }];
-    setCars(newItems);
-    saveCars(newItems);
-  }, [cars]);
+    const newSorted = sortCarsByOption(newItems, sortOption)
+    setCars(newSorted);
+    saveCars(newSorted);
+  }, [sortOption]);
 
   useEffect(() => {
     const initialLoading = async () => {
@@ -70,6 +43,33 @@ function App() {
     initialLoading();
   }, []);
 
+  useEffect(() => {
+    if (cars.length) {
+      setCars( prev => {
+        const sorted = sortCarsByOption(prev, sortOption);
+        saveCars(sorted);
+        return sorted;
+      })
+    }
+  }, [sortOption])
+
+  const sortCarsByOption = (carsArray, option) => {
+    const sorted = [...carsArray];
+    
+    switch (option) {
+      case "year-sort":
+        sorted.sort((a, b) => a.year - b.year);
+        break;
+      case "price-sort":
+        sorted.sort((a, b) => a.price - b.price);
+        break;
+      default:
+        sorted.sort((a, b) => a.id - b.id);
+    }
+    
+    return sorted;
+  }
+
   return (
     <>
       <header className="section header">
@@ -82,7 +82,7 @@ function App() {
           :
           <>
             <div>
-              <Sort onSort={sortCars}></Sort>
+              <Sort></Sort>
               <AddCarForm onAddCar={addCar}></AddCarForm>
             </div>
             <CarsList cars={cars}></CarsList>

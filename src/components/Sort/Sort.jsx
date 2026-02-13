@@ -1,25 +1,27 @@
 import { useCallback, useEffect, useState } from "react";
 import "./Sort.css";
+import { useSort } from "../../context/SortContext";
 
-function Sort({ onSort }) {
+function Sort() {
     const [isOpen, setOpen] = useState(false);
-    const [pickedOptionID, setOptionID] = useState("no-sort");
+    const { sortOption, setSortOption } = useSort();
 
+    // При монтировании без сортировки
     useEffect(() => {
-        document.querySelector(`#${pickedOptionID}`).classList.add("sort-option__picked");
-        onSort(pickedOptionID);
-    }, [pickedOptionID]);
+        document.querySelector(`#${sortOption}`).classList.add("sort-option__picked");
+    }, []);
 
     const changeOption = useCallback((event) => {
         event.preventDefault();
-        if (event.target.id === pickedOptionID) {
+        if (event.target.id === sortOption) {
             return;
         }
         event.target.classList.add("sort-option__picked");
-        document.querySelector(`#${pickedOptionID}`).classList.remove("sort-option__picked");
-        setOptionID(event.target.id);
+        document.querySelector(`#${event.target.id}`).classList.add("sort-option__picked");
+        document.querySelector(`#${sortOption}`).classList.remove("sort-option__picked");
+        setSortOption(event.target.id);
         setOpen(false);
-    }, [pickedOptionID]);
+    }, [sortOption]);
 
     return (
         <article className={`sort-window${isOpen ? " opened" : ""}`}>
