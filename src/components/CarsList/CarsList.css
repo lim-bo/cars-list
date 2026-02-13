@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 10px 15px;
+    padding: 20px 35px;
     block-size: 100%;
     overflow-y: auto;
 }

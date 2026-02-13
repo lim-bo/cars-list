@@ -35,7 +35,7 @@
     position: relative;
     display: grid;
     grid-template-rows: max-content 1fr;
-    max-block-size: 85dvh;
+    block-size: 85dvh;
     overflow-x: hidden;
 }
 

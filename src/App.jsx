@@ -13,12 +13,36 @@ function App() {
   const { sortOption } = useSort();
 
   const addCar = useCallback((newCar) => {
-    const newItems = [...cars, { id: getMinID(cars), ...newCar }];
-    const newSorted = sortCarsByOption(newItems, sortOption)
-    setCars(newSorted);
-    saveCars(newSorted);
+    setCars(prev => {
+      const newItems = [...prev, { id: getMinID(prev), ...newCar }];
+      const sorted = sortCarsByOption(newItems, sortOption)
+      saveCars(sorted);
+      return sorted;
+    })
+    
   }, [sortOption]);
 
+  const deleteCar = useCallback((id) => {
+    setCars(prev => {
+      const newItems = prev.filter(car => car.id !== id);
+      const sorted = sortCarsByOption(newItems, sortOption);
+      saveCars(sorted);
+      return sorted;
+    })
+    
+  }, [sortOption]);
+
+  const updateCar = useCallback((id, newData) => {
+    setCars(prev => {
+      const newItems = prev.map((car) => car.id === id ? {...car, ...newData} : car );
+      const sorted = sortCarsByOption(newItems, sortOption);
+      saveCars(sorted);
+      return sorted;
+    })
+    
+  }, [sortOption]);
+
+  // Инициализация: берём данные с апи или достаём из localstorage, если есть
   useEffect(() => {
     const initialLoading = async () => {
       const localCars = loadCars();
@@ -43,6 +67,7 @@ function App() {
     initialLoading();
   }, []);
 
+  // Пересортировка при изменении опции сортировки
   useEffect(() => {
     if (cars.length) {
       setCars( prev => {
@@ -82,10 +107,12 @@ function App() {
           :
           <>
             <div>
-              <Sort></Sort>
+              {
+                cars.length ? <Sort/> : <></>
+              }
               <AddCarForm onAddCar={addCar}></AddCarForm>
             </div>
-            <CarsList cars={cars}></CarsList>
+            <CarsList cars={cars} onDelete={deleteCar} onUpdate={updateCar}></CarsList>
           </>
         }
       </main>
